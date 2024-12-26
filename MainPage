@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Point Allocation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .stat {
+            margin: 10px 0;
+        }
+        button {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Allocate Your Skill Points</h1>
+    <p>Available Points: <span id="available-points">30</span></p>
+
+    <div id="stats-container">
+        <div class="stat">
+            Strength: <span id="strength">5</span>
+            <button onclick="adjustStat('strength', 1)">+</button>
+            <button onclick="adjustStat('strength', -1)">-</button>
+        </div>
+        <div class="stat">
+            Dexterity: <span id="dexterity">5</span>
+            <button onclick="adjustStat('dexterity', 1)">+</button>
+            <button onclick="adjustStat('dexterity', -1)">-</button>
+        </div>
+        <div class="stat">
+            Intelligence: <span id="intelligence">5</span>
+            <button onclick="adjustStat('intelligence', 1)">+</button>
+            <button onclick="adjustStat('intelligence', -1)">-</button>
+        </div>
+        <div class="stat">
+            Charisma: <span id="charisma">5</span>
+            <button onclick="adjustStat('charisma', 1)">+</button>
+            <button onclick="adjustStat('charisma', -1)">-</button>
+        </div>
+        <div class="stat">
+            Luck: <span id="luck">5</span>
+            <button onclick="adjustStat('luck', 1)">+</button>
+            <button onclick="adjustStat('luck', -1)">-</button>
+        </div>
+    </div>
+
+    <script>
+        const stats = {
+            strength: 5,
+            dexterity: 5,
+            intelligence: 5,
+            charisma: 5,
+            luck: 5
+        };
+        let availablePoints = 30;
+
+        function adjustStat(stat, amount) {
+            if (amount > 0 && availablePoints > 0 && stats[stat] < 10) {
+                stats[stat] += amount;
+                availablePoints -= amount;
+            } else if (amount < 0 && stats[stat] && stats[stat] > 5) {
+                stats[stat] += amount;
+                availablePoints -= amount;
+            }
+            updateUI();
+        }
+
+        function updateUI() {
+            for (let stat in stats) {
+                document.getElementById(stat).textContent = stats[stat];
+            }
+            document.getElementById('available-points').textContent = availablePoints;
+        }
+    </script>
+</body>
+</html>
