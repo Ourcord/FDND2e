@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    <h1>Allocate Your Skill Points</h1>
+    <h1>Allocate Your ablity Points</h1>
     <p>Available Points: <span id="available-points">30</span></p>
 
     <div id="stats-container">
@@ -62,20 +62,19 @@
     <button onclick="saveToCookies()">Save to Cookies</button>
     <button onclick="loadFromCookies()">Load from Cookies</button>
     <br><br>
-    <label for="race">race:</label>
+    <label for="race">Race:</label>
     <select id="race" onchange="updateOptions()">
         <option value="">-- Select a race --</option>
         <option value="Sapien">Sapien</option>
         <option value="Robot">Robot</option>
         <option value="Mutant">Mutant</option>
-
     </select>
 
     <br><br>
 
-    <label for="Subclasses">SubcRaces:</label>
-    <select id="Subclasses">
-        <option value="">-- Select a SubcRaces--</option>
+    <label for="subclasses">Subclasses:</label>
+    <select id="subclasses">
+        <option value="">-- Select a subclass --</option>
     </select>
 
     <script>
@@ -94,7 +93,7 @@
             if (amount > 0 && availablePoints > 0 && stats[stat] < 10) {
                 stats[stat] += amount;
                 availablePoints -= amount;
-            } else if (amount < 0 && stats[stat] && stats[stat] > 1) {
+            } else if (amount < 0 && stats[stat] > 1) {
                 stats[stat] += amount;
                 availablePoints -= amount;
             }
@@ -109,53 +108,54 @@
         }
 
         function saveToCookies() {
-            
             for (let stat in stats) {
-                document.cookie = `${stat}=${encodeURIComponent(stats[stat])}; max-age=${999 * 24 * 60 * 60}; path=/`;
+                document.cookie = `${stat}=${encodeURIComponent(stats[stat])}; max-age=${9999 * 24 * 60 * 60}; path=/`;
             }
-
+            const race = document.getElementById('race').value;
+            const subclass = document.getElementById('subclasses').value;
+            document.cookie = `race=${encodeURIComponent(race)}; max-age=${9999 * 24 * 60 * 60}; path=/`;
+            document.cookie = `subclass=${encodeURIComponent(subclass)}; max-age=${9999 * 24 * 60 * 60}; path=/`;
             alert('Data saved to cookies!');
         }
 
         function loadFromCookies() {
-            // Read cookies and populate the form fields
             availablePoints = 30;
             const cookies = document.cookie.split('; ');
-
             cookies.forEach(cookie => {
                 const [key, value] = cookie.split('=');
                 if (stats.hasOwnProperty(key)) {
                     stats[key] = parseInt(decodeURIComponent(value));
-                    availablePoints -= stats[key] - 1 ;
+                    availablePoints -= stats[key] - 1;
+                } else if (key === 'race') {
+                    document.getElementById('race').value = decodeURIComponent(value);
+                    updateOptions();
+                } else if (key === 'subclass') {
+                    document.getElementById('subclasses').value = decodeURIComponent(value);
                 }
             });
-
-            // Update the UI with the loaded values
             updateUI();
-
-            alert('Data loaded from cookies!');
         }
+
         const options = {
             Sapien: ["Human", "Ghoul"],
-            Robot: ["protectrons", "mr handys", "assaultrons", "eyebots"],
-            Mutant: ["Super Mutants", "Mutated Abominations"] 
-            
+            Robot: ["Protectrons", "Mr. Handys", "Assaultrons", "Eyebots"],
+            Mutant: ["Super Mutants", "Mutated Abominations"]
         };
 
         function updateOptions() {
-            const race = document.getElementById("race").value;
-            const SubclassesDropdown = document.getElementById("Subclasses");
+            const race = document.getElementById('race').value;
+            const subclassesDropdown = document.getElementById('subclasses');
 
             // Clear existing options
-            SubclassesDropdown.innerHTML = '<option value="">-- Select a subclass --</option>';
+            subclassesDropdown.innerHTML = '<option value="">-- Select a subclass --</option>';
 
             // Populate the second dropdown based on the selected race
             if (options[race]) {
                 options[race].forEach(item => {
-                    const optionElement = document.createElement("option");
+                    const optionElement = document.createElement('option');
                     optionElement.value = item.toLowerCase();
                     optionElement.textContent = item;
-                    SubclassesDropdown.appendChild(optionElement);
+                    subclassesDropdown.appendChild(optionElement);
                 });
             }
         }
