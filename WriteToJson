@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save Data to Cookies</title>
+</head>
+<body>
+    <h1>Save Data to Cookies</h1>
+    
+    <label for="name">Name:</label>
+    <input type="text" id="name" placeholder="Enter name"><br><br>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" placeholder="Enter age"><br><br>
+
+    <button onclick="saveToCookies()">Save to Cookies</button>
+    <button onclick="loadFromCookies()">Load from Cookies</button>
+
+    <script>
+      function saveToCookies() {
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+
+        // Save to cookies (setting expiration date as 7 days from now)
+        document.cookie = `name=${encodeURIComponent(name)}; max-age=${7 * 24 * 60 * 60}; path=/`;
+        document.cookie = `age=${encodeURIComponent(age)}; max-age=${7 * 24 * 60 * 60}; path=/`;
+
+        alert('Data saved to cookies!');
+      }
+
+      function loadFromCookies() {
+        // Read cookies and populate the form fields
+        const cookies = document.cookie.split('; ');
+        let name = '';
+        let age = '';
+
+        cookies.forEach(cookie => {
+          const [key, value] = cookie.split('=');
+          if (key === 'name') name = decodeURIComponent(value);
+          if (key === 'age') age = decodeURIComponent(value);
+        });
+
+        // Populate fields if data exists
+        document.getElementById('name').value = name;
+        document.getElementById('age').value = age;
+      }
+    </script>
+</body>
+</html>
