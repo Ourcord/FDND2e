@@ -24,39 +24,53 @@
 
     <div id="stats-container">
         <div class="stat">
-            Strength: <span id="strength">5</span>
-            <button onclick="adjustStat('strength', 1)">+</button>
-            <button onclick="adjustStat('strength', -1)">-</button>
+            STR: <span id="STR">5</span>
+            <button onclick="adjustStat('STR', 1)">+</button>
+            <button onclick="adjustStat('STR', -1)">-</button>
         </div>
         <div class="stat">
-            Dexterity: <span id="dexterity">5</span>
-            <button onclick="adjustStat('dexterity', 1)">+</button>
-            <button onclick="adjustStat('dexterity', -1)">-</button>
+            PER: <span id="PER">5</span>
+            <button onclick="adjustStat('PER', 1)">+</button>
+            <button onclick="adjustStat('PER', -1)">-</button>
         </div>
         <div class="stat">
-            Intelligence: <span id="intelligence">5</span>
-            <button onclick="adjustStat('intelligence', 1)">+</button>
-            <button onclick="adjustStat('intelligence', -1)">-</button>
+            END: <span id="END">5</span>
+            <button onclick="adjustStat('END', 1)">+</button>
+            <button onclick="adjustStat('END', -1)">-</button>
         </div>
         <div class="stat">
-            Charisma: <span id="charisma">5</span>
-            <button onclick="adjustStat('charisma', 1)">+</button>
-            <button onclick="adjustStat('charisma', -1)">-</button>
+            CHAR: <span id="CHAR">5</span>
+            <button onclick="adjustStat('CHAR', 1)">+</button>
+            <button onclick="adjustStat('CHAR', -1)">-</button>
         </div>
         <div class="stat">
-            Luck: <span id="luck">5</span>
-            <button onclick="adjustStat('luck', 1)">+</button>
-            <button onclick="adjustStat('luck', -1)">-</button>
+            INT: <span id="INT">5</span>
+            <button onclick="adjustStat('INT', 1)">+</button>
+            <button onclick="adjustStat('INT', -1)">-</button>
+        </div>
+        <div class="stat">
+            AGL: <span id="AGL">5</span>
+            <button onclick="adjustStat('AGL', 1)">+</button>
+            <button onclick="adjustStat('AGL', -1)">-</button>
+        </div>
+        <div class="stat">
+            LUC: <span id="LUC">5</span>
+            <button onclick="adjustStat('LUC', 1)">+</button>
+            <button onclick="adjustStat('LUC', -1)">-</button>
         </div>
     </div>
+    <button onclick="saveToCookies()">Save to Cookies</button>
+    <button onclick="loadFromCookies()">Load from Cookies</button>
 
     <script>
         const stats = {
-            strength: 5,
-            dexterity: 5,
-            intelligence: 5,
-            charisma: 5,
-            luck: 5
+            STR: 5,
+            PER: 5,
+            END: 5,
+            CHAR: 5,
+            INT: 5,
+            AGL: 5,
+            LUC: 5
         };
         let availablePoints = 30;
 
@@ -76,6 +90,34 @@
                 document.getElementById(stat).textContent = stats[stat];
             }
             document.getElementById('available-points').textContent = availablePoints;
+        }
+
+        function saveToCookies() {
+            
+            for (let stat in stats) {
+                document.cookie = `${stat}=${encodeURIComponent(stats[stat])}; max-age=${999 * 24 * 60 * 60}; path=/`;
+            }
+
+            alert('Data saved to cookies!');
+        }
+
+        function loadFromCookies() {
+            // Read cookies and populate the form fields
+            availablePoints = 30;
+            const cookies = document.cookie.split('; ');
+
+            cookies.forEach(cookie => {
+                const [key, value] = cookie.split('=');
+                if (stats.hasOwnProperty(key)) {
+                    stats[key] = parseInt(decodeURIComponent(value));
+                    availablePoints -= stats[key] - 5;
+                }
+            });
+
+            // Update the UI with the loaded values
+            updateUI();
+
+            alert('Data loaded from cookies!');
         }
     </script>
 </body>
