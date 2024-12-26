@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skill Point Allocation</title>
+    <title>Ability Point Allocation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,53 +24,69 @@
 
     <div id="stats-container">
         <div class="stat">
-            STR: <span id="STR">5</span>
+            STR: <span id="STR">1</span>
             <button onclick="adjustStat('STR', 1)">+</button>
             <button onclick="adjustStat('STR', -1)">-</button>
         </div>
         <div class="stat">
-            PER: <span id="PER">5</span>
+            PER: <span id="PER">1</span>
             <button onclick="adjustStat('PER', 1)">+</button>
             <button onclick="adjustStat('PER', -1)">-</button>
         </div>
         <div class="stat">
-            END: <span id="END">5</span>
+            END: <span id="END">1</span>
             <button onclick="adjustStat('END', 1)">+</button>
             <button onclick="adjustStat('END', -1)">-</button>
         </div>
         <div class="stat">
-            CHAR: <span id="CHAR">5</span>
+            CHAR: <span id="CHAR">1</span>
             <button onclick="adjustStat('CHAR', 1)">+</button>
             <button onclick="adjustStat('CHAR', -1)">-</button>
         </div>
         <div class="stat">
-            INT: <span id="INT">5</span>
+            INT: <span id="INT">1</span>
             <button onclick="adjustStat('INT', 1)">+</button>
             <button onclick="adjustStat('INT', -1)">-</button>
         </div>
         <div class="stat">
-            AGL: <span id="AGL">5</span>
+            AGL: <span id="AGL">1</span>
             <button onclick="adjustStat('AGL', 1)">+</button>
             <button onclick="adjustStat('AGL', -1)">-</button>
         </div>
         <div class="stat">
-            LUC: <span id="LUC">5</span>
+            LUC: <span id="LUC">1</span>
             <button onclick="adjustStat('LUC', 1)">+</button>
             <button onclick="adjustStat('LUC', -1)">-</button>
         </div>
     </div>
     <button onclick="saveToCookies()">Save to Cookies</button>
     <button onclick="loadFromCookies()">Load from Cookies</button>
+    <br><br>
+    <label for="race">race:</label>
+    <select id="race" onchange="updateOptions()">
+        <option value="">-- Select a race --</option>
+        <option value="Sapien">Sapien</option>
+        <option value="Robot">Robot</option>
+        <option value="Mutant">Mutant</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="Subclasses">SubcRaces:</label>
+    <select id="Subclasses">
+        <option value="">-- Select a SubcRaces--</option>
+    </select>
 
     <script>
         const stats = {
-            STR: 5,
-            PER: 5,
-            END: 5,
-            CHAR: 5,
-            INT: 5,
-            AGL: 5,
-            LUC: 5
+            STR: 1,
+            PER: 1,
+            END: 1,
+            CHAR: 1,
+            INT: 1,
+            AGL: 1,
+            LUC: 1
         };
         let availablePoints = 30;
 
@@ -78,7 +94,7 @@
             if (amount > 0 && availablePoints > 0 && stats[stat] < 10) {
                 stats[stat] += amount;
                 availablePoints -= amount;
-            } else if (amount < 0 && stats[stat] && stats[stat] > 5) {
+            } else if (amount < 0 && stats[stat] && stats[stat] > 1) {
                 stats[stat] += amount;
                 availablePoints -= amount;
             }
@@ -110,7 +126,7 @@
                 const [key, value] = cookie.split('=');
                 if (stats.hasOwnProperty(key)) {
                     stats[key] = parseInt(decodeURIComponent(value));
-                    availablePoints -= stats[key] - 5;
+                    availablePoints -= stats[key] - 1 ;
                 }
             });
 
@@ -118,6 +134,30 @@
             updateUI();
 
             alert('Data loaded from cookies!');
+        }
+        const options = {
+            Sapien: ["Human", "Ghoul"],
+            Robot: ["protectrons", "mr handys", "assaultrons", "eyebots"],
+            Mutant: ["Super Mutants", "Mutated Abominations"] 
+            
+        };
+
+        function updateOptions() {
+            const race = document.getElementById("race").value;
+            const SubclassesDropdown = document.getElementById("Subclasses");
+
+            // Clear existing options
+            SubclassesDropdown.innerHTML = '<option value="">-- Select a subclass --</option>';
+
+            // Populate the second dropdown based on the selected race
+            if (options[race]) {
+                options[race].forEach(item => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = item.toLowerCase();
+                    optionElement.textContent = item;
+                    SubclassesDropdown.appendChild(optionElement);
+                });
+            }
         }
     </script>
 </body>

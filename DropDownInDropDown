@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dependent Dropdowns</title>
+</head>
+<body>
+    <h1>Dependent Dropdown Example</h1>
+    
+    <label for="race">race:</label>
+    <select id="race" onchange="updateOptions()">
+        <option value="">-- Select a race --</option>
+        <option value="Sapien">Sapien</option>
+        <option value="Robot">Robot</option>
+        <option value="Mutant">Mutant</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="SubRaces">SubRaces:</label>
+    <select id="SubRaces">
+        <option value="">-- Select a subclass--</option>
+    </select>
+
+    <script>
+        const options = {
+            Sapien: ["Human", "Ghoul"],
+            Robot: ["protectrons", "mr handys", "assaultrons", "eyebots"],
+            Mutant: ["Super Mutants", "Mutated Abominations"] 
+            
+        };
+
+        function updateOptions() {
+            const race = document.getElementById("race").value;
+            const SubRacesDropdown = document.getElementById("SubRaces");
+
+            // Clear existing options
+            SubRacesDropdown.innerHTML = '<option value="">-- Select a subclass --</option>';
+
+            // Populate the second dropdown based on the selected race
+            if (options[race]) {
+                options[race].forEach(item => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = item.toLowerCase();
+                    optionElement.textContent = item;
+                    SubRacesDropdown.appendChild(optionElement);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
