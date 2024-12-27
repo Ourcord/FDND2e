@@ -1,0 +1,47 @@
+<html>
+<head >
+    <style>
+        h1 {
+            font-size: 30;
+            font-family:'Courier New', Courier, monospace;
+            text-decoration: underline;
+            color: rgb(4, 26, 7);
+        }
+    </style>
+
+
+</head>
+
+<body>
+<image src = "vb.gif" style="width: 50px; height: 50px; border: 1px, black;"></image>
+
+<h1>placeholder: </h1>
+<div>Race: <br><span id="racesel"></span></div>
+<div>Skills: <br><span id="skillsel"></span></div>
+<div>Stats: <br><span id="statsel"></span></div>
+
+</body>
+
+<script>
+
+    function loadFromCookies() {
+
+            availablePoints = 30;
+            const cookies = document.cookie.split('; ');
+            cookies.forEach(cookie => {
+                const [key, value] = cookie.split('=');
+                if (key === 'racechoice') {
+                    document.getElementById('racesel').innerHTML = decodeURIComponent(value);
+                    console.log(decodeURIComponent(value))
+                } else if (key === 'skillschoice') {
+                    document.getElementById('skillsel').innerHTML = decodeURIComponent(value);
+                    console.log(decodeURIComponent(value))
+                } else if (key === 'savedstatarray') {
+                    document.getElementById('statsel').innerHTML = decodeURIComponent(value);
+                    console.log(decodeURIComponent(value))
+                }
+            });
+    }
+    window.onload = loadFromCookies;
+</script>
+</html>

@@ -1,0 +1,271 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FDND2e Stat Allocation</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin: 20px;
+            }
+            h1{
+                font-size: 30;
+                font-family:'Courier New', Courier, monospace;
+                text-decoration: underline;
+            }
+            .stat {
+                margin: 10px 0;
+            }
+            button {
+                margin: 0 5px;
+            }
+            .racistdropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .racistdropdown button {
+                background-color: #0e0f0e;
+                color: white;
+                padding: 2px 3px;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .racistdropdown .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 100px;
+                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+
+            .racistdropdown .dropdown-content .submenu {
+                position: relative;
+            }
+
+            .racistdropdown .dropdown-content .submenu-content {
+                display: none;
+                position: absolute;
+                left: 100%;
+                top: 0;
+                background-color: #f1f1f1;
+                min-width: 100px;
+                box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+
+            .racistdropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .submenu:hover .submenu-content {
+                display: block;
+            }
+
+            .racistdropdown a {
+                color: black;
+                padding: 10px 15px;
+                text-decoration: none;
+                display: block;
+            }
+
+            .racistdropdown a:hover {
+                background-color: #ddd;
+            }
+        </style>
+    </head>
+    <body>
+        <image src="FDNDwebico.png" style="box-shadow:hsl(from color h s l)"></image>
+        <hr>
+        <h1>Allocate Your Stat Points</h1>
+        <p>Available Points: <span id="available-points">30</span></p>
+    
+        <div id="stats-container">
+            <div class="stat">
+                Strength: <span id="strength">1</span>
+                <button onclick="adjustStat('strength', 1)">+</button>
+                <button onclick="adjustStat('strength', -1)">-</button>
+            </div>
+            <div class="stat">
+                Perception: <span id="perception">1</span>
+                <button onclick="adjustStat('perception', 1)">+</button>
+                <button onclick="adjustStat('perception', -1)">-</button>
+            </div>
+            <div class="stat">
+                Endurance: <span id="endurance">1</span>
+                <button onclick="adjustStat('endurance', 1)">+</button>
+                <button onclick="adjustStat('endurance', -1)">-</button>
+            </div>
+            <div class="stat">
+                Charisma: <span id="charisma">1</span>
+                <button onclick="adjustStat('charisma', 1)">+</button>
+                <button onclick="adjustStat('charisma', -1)">-</button>
+            </div>
+            <div class="stat">
+                Intelligence: <span id="intelligence">1</span>
+                <button onclick="adjustStat('intelligence', 1)">+</button>
+                <button onclick="adjustStat('intelligence', -1)">-</button>
+            </div>
+            <div class="stat">
+                Agility: <span id="agility">1</span>
+                <button onclick="adjustStat('agility', 1)">+</button>
+                <button onclick="adjustStat('agility', -1)">-</button>
+            </div>
+            <div class="stat">
+                Luck: <span id="luck">1</span>
+                <button onclick="adjustStat('luck', 1)">+</button>
+                <button onclick="adjustStat('luck', -1)">-</button>
+            </div>
+        </div>
+
+    <h1>Choose your Tag Skills:</h1>
+    <select id="skillsDropdown1" onchange="assignSkillValue()">
+        <option value="" selected disabled>Select a skill</option>
+    </select>
+    <select id="skillsDropdown2" onchange="assignSkillValue()">
+        <option value="" selected disabled>Select a skill</option>
+    </select>
+    <select id="skillsDropdown3" onchange="assignSkillValue()">
+        <option value="" selected disabled>Select a skill</option>
+    </select>
+    <h3 style="font-size: 14; font-family:'Courier New', Courier, monospace">Your Selected Skills Are: <p id = "livechange" style = "font-size: 15; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"></p> </h3>
+    <p style="font-size: 12; font-family: 'Courier New', Courier, monospace">*Keep in mind, these tag skills will only gain [+3]</p>
+
+    <h1>Choose your Species</h1>
+        <p style="font-family: 'Courier New', Courier, monospace; font-size: 14;">[*Note: This can affect stats/skills.]</p>
+        <div class="racistdropdown">
+            <button>Choose a Race</button>
+            <div class="dropdown-content">
+                <!-- Sapien Stuff -->
+                <div class="submenu">
+                    <a href="#">Sapien</a>
+                    <div class="submenu-content">
+                        <a href="#" class="final-choice">Ghoul</a>
+                        <a href="#" class="final-choice">Human</a>
+                    </div>
+                </div>
+                <!-- Mutant Stuff -->
+                <div class="submenu">
+                    <a href="#">Mutant</a>
+                    <div class="submenu-content">
+                        <a href="#" class="final-choice">Abomination</a>
+                        <a href="#" class="final-choice">Super Mutant</a>
+                    </div>
+                </div>
+                <!-- Robot Stuff -->
+                <div class="submenu">
+                    <a href="#">Robot</a>
+                    <div class="submenu-content">
+                        <a href="#" class="final-choice">Assaultron</a>
+                        <a href="#" class="final-choice">Eyebot</a>
+                        <a href="#" class="final-choice">Protectron</a>
+                        <a href="#" class="final-choice">Mr Handy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 style ="font-size: 14; font-family:'Courier New', Courier, monospace">Race Choosen: <p id="racism" style="font-size: 15; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"></p></h3>
+        <br>
+        <a href="nextstep.html"><button style="padding: 5px 8px; background-color:rgba(20, 124, 6, 0.2); text-decoration: underline; font-size: 25px;" id="Next" onclick="saveAll()">Next Step</button></a>
+        
+
+
+        
+        <script>
+
+            const stats = {
+                strength: 1,
+                perception: 1,
+                endurance: 1,
+                charisma: 1,
+                intelligence: 1,
+                agility: 1,
+                luck: 1
+            };
+            let availablePoints = 30;
+    
+            function adjustStat(stat, amount) {
+                if (amount > 0 && availablePoints > 0 && stats[stat] < 10) {
+                    stats[stat] += amount;
+                    availablePoints -= amount;
+                } else if (amount < 0 && stats[stat] && stats[stat] > 1) {
+                    stats[stat] += amount;
+                    availablePoints -= amount;
+                }
+                updateUI();
+            }
+
+            const skills = [
+            "Barter", "Speech", "Science", "Ingenuity", "Steal", "Lockpick",
+            "Medicine", "Repair", "Sneak", "Gambling", "Survival",
+            "Melee Weapons", "Unarmed", "Big Guns", "Small Guns",
+            "Energy Weapons", "Explosives"
+        ];
+
+        const dropdowns = [
+            document.getElementById("skillsDropdown1"),
+            document.getElementById("skillsDropdown2"),
+            document.getElementById("skillsDropdown3")
+        ];
+
+        function wr (variable) {
+            document.write(variable)
+        }
+
+        dropdowns.forEach(dropdown => {
+            skills.forEach(skill => {
+                const option = document.createElement('option');
+                option.value = skill;
+                option.textContent = skill;
+                dropdown.appendChild(option);
+            });
+        });
+    
+            function updateUI() {
+                for (let stat in stats) {
+                    document.getElementById(stat).textContent = stats[stat];
+                }
+                document.getElementById('available-points').textContent = availablePoints;
+            }
+            function assignSkillValue() {
+                const selectedSkills = dropdowns.map(dropdown => dropdown.value);
+
+                dropdowns.forEach(dropdown => {
+                const options = dropdown.options;
+                for (let i = 1; i < options.length; i++) { 
+                    options[i].disabled = selectedSkills.includes(options[i].value) && dropdown.value !== options[i].value;
+                    }
+                });
+                document.getElementById("livechange").innerHTML = selectedSkills.join(" | ");
+            }
+            function getfskill() {
+                const selectedSkills = dropdowns.map(dropdown => dropdown.value);
+                document.getElementById("livechange").innerHTML = selectedSkills.join(", ");
+                return selectedSkills
+            }
+            document.querySelectorAll('.final-choice').forEach(option => {
+            option.addEventListener('click', function (event) {
+            event.preventDefault(); 
+            const selectedRace = this.textContent; 
+            document.getElementById('racism').textContent = selectedRace; 
+                });
+            });
+            
+        function saveAll(){
+            const skillschoice = document.getElementById('livechange').innerHTML; // Assuming it's an input or textarea
+            const racechoice = document.getElementById('racism').innerHTML;       // Assuming it's an input or select
+            const statsString = JSON.stringify(stats);
+
+            document.cookie = `racechoice=${encodeURIComponent(racechoice)}; max-age=${9999 * 24 * 60 * 60}; path=/; SameSite=Strict`;
+            document.cookie = `skillschoice=${encodeURIComponent(skillschoice)}; max-age=${9999 * 24 * 60 * 60}; path=/; SameSite=Strict`;
+            document.cookie = `savedstatarray=${encodeURIComponent(statsString)}; max-age=${9999 * 24 * 60 * 60}; path=/; SameSite=Strict`;
+        }
+        </script>
+
+
+    </body>
+</html>
